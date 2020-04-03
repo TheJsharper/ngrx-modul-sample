@@ -6,7 +6,8 @@ const routes: Routes = [
   {
     path:'',
     loadChildren: ()=> import('./micro-apps/admin/admin.module').then(m => m.AdminModule)
-  }
+  },
+ // { path: '',   redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

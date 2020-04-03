@@ -1,6 +1,7 @@
-import { NgModule } from "@angular/core";
+import { NgModule, Component } from "@angular/core";
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin-apps/admin.component';
+import { AdminDashboardComponent } from './dashboard/admin-dashboard.component';
 
 const adminRoutes: Routes = [
     {
@@ -10,8 +11,8 @@ const adminRoutes: Routes = [
             {
                 path:'',
                 children:[
-                    {}, // first component
-                    {} // secound component
+                    {path:'admin-dashboard', component: AdminDashboardComponent}, // first component
+                   // {}  secound component
                 ]
             }
         ]
