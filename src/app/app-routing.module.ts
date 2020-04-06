@@ -7,7 +7,7 @@ const routes: Routes = [
     path:'',
     loadChildren: ()=> import('./micro-apps/admin/admin.module').then(m => m.AdminModule)
   },
- // { path: '',   redirectTo: '', pathMatch: 'full' },
+  { path: 'population',  loadChildren: ()=> import('./micro-apps/world-population/world.population.module').then(m => m.WorldPopulationModule) },
 ];
 
 @NgModule({

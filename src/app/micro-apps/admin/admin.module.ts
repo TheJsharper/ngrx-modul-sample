@@ -7,9 +7,7 @@ import { AdminComponent } from './admin-apps/admin.component';
 
 @NgModule({
     declarations: [AdminDashboardComponent, AdminComponent],
-    imports: [AdminRoutingModule, RouterModule,
-      
-    ],
+    imports: [AdminRoutingModule, RouterModule],
     exports: [RouterModule, AdminDashboardComponent]
 })
 export class AdminModule {
