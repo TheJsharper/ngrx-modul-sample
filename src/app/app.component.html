@@ -16,10 +16,12 @@
       </svg>
     </a>
 </div>
- <!--<nav>
- <a routerLink="./" routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
-  <a routerLink="./crises" routerLinkActive="active">Manage Crises</a>
-  <a routerLink="./admin-dashboard" routerLinkActive="active">Manage Heroes</a>
-</nav>-->
+<!--<div class="container">
+ 
+</div>-->
+
+<mat-toolbar [color]="'primary'" style="margin-top: 50px;" >
+	<button mat-icon-button ><mat-icon>menu</mat-icon></button>
+	<h1 >Micro-Apps</h1>
+</mat-toolbar>
 <router-outlet></router-outlet>
