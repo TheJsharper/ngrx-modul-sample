@@ -1,3 +1,41 @@
 <h1>
-    The World component
+  The World component
 </h1>
+
+<table mat-table [dataSource]="dataSource">
+
+
+  <!----><ng-container [matColumnDef]="item.property" *ngFor="let item of config; let i as item"  [sticky]="i==0" [stickyEnd]="item.property ==='star'">
+
+    <th mat-header-cell *matHeaderCellDef> {{item.name}} </th>
+    <td mat-cell *matCellDef="let element"> {{getValue(element, item.property)}} </td>
+  </ng-container>
+
+ <!--<ng-container *ngFor="let item of config; let i as index;">
+
+    <ng-container [matColumnDef]="item.property" *ngIf="item.property !=='star' && i == 0" [sticky]="true">
+      <th mat-header-cell *matHeaderCellDef> {{item.name}} </th>
+      <td mat-cell *matCellDef="let element"> {{getValue(element, item.property)}} </td>
+    </ng-container>
+
+    <ng-container [matColumnDef]="item.property" *ngIf="item.property !=='star' && i > 0">
+      <th mat-header-cell *matHeaderCellDef> {{item.name}} </th>
+      <td mat-cell *matCellDef="let element"> {{getValue(element, item.property)}} </td>
+
+    </ng-container>
+
+
+
+
+
+    <ng-container [matColumnDef]="item.property" *ngIf="item.property ==='star' && i > 0" [stickyEnd]="true">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon>more_vert</mat-icon>
+    </ng-container>
+
+  </ng-container>--->
+
+  <tr mat-header-row *matHeaderRowDef="keys; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: keys;"></tr>
+</table>
