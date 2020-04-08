@@ -1,19 +1,29 @@
-import { Component } from '@angular/core';
-import { Countries, Country, keys } from '../models/model.contries';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { Countries, keys } from '../models/model.contries';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
     selector: 'world-table-view',
-    templateUrl: './world.population.tableView.component.html'
+    templateUrl: './world.population.tableView.component.html',
+    styleUrls:['./world.population.tabbleView.component.scss']
 })
-export class WorldPopulationTableViewComponent {
+export class WorldPopulationTableViewComponent implements OnInit {
 
-    dataSource: Country[] = Countries;
+    dataSource = new MatTableDataSource(Countries);
     keys: String[];
     config: HeaderRename[];
+    @ViewChild(MatSort, {static: true}) sort: MatSort;
+    @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
     constructor() {
         this.keys = keys;
+        this.keys.push("star");
         this.config = this.getConfig();
-        //['name', 'position', 'weight', 'symbol', 'position', 'weight', 'symbol', 'star'];
+    }
+    ngOnInit(): void {
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
     }
     getValue(element: any, key: string): any {
         return element[key];
@@ -27,11 +37,13 @@ export class WorldPopulationTableViewComponent {
             prev.push(newObject);
             return prev;
         }, []);
-        result.splice(5, 0, { property: "star", name: "" });
-        //result.push({property:"star", name:""})
-        console.log("--->", result);
+        result.push({ property: "star", name: "star" });
         return result;
     }
+    applyFilter(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+      }
 
 }
 
