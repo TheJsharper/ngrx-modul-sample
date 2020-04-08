@@ -21,9 +21,12 @@
 
     th.mat-column-position,
     td.mat-column-position {
-        padding-left: 8px;
+        padding-left: 50px;
     }
 
+    ::ng-deepth.mat-header-cell, ::ng-deep td.mat-cell, ::ng-deep td.mat-footer-cell {
+        padding-left: 15px;
+    }
     .mat-table-sticky:first-child {
         border-right: 1px solid #e0e0e0;
     }
