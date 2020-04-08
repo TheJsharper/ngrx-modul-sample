@@ -18,8 +18,8 @@
 
       <ng-container [matColumnDef]="item.property" *ngIf="item.property !=='star' && i > 0 && isYear(item.name)">
         <th mat-header-cell mat-sort-header *matHeaderCellDef> {{item.name}} </th>
-        <td mat-cell *matCellDef="let element"> {{getValue(element, item.property)}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{getTotal(item.property) }} </td>
+        <td mat-cell *matCellDef="let element"> {{getValue(element, item.property) | number:'1.0-3'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{getTotal(item.property) | number:'1.0-3' }} </td>
       </ng-container>
 
       <ng-container [matColumnDef]="item.property" *ngIf="item.property ==='Country_Code' && i > 0 && item.property !=='star' ">
