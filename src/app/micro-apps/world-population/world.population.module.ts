@@ -11,13 +11,17 @@ import { WorldPopulationRouting } from './world.population-routing.module';
 import { MatInputModule } from "@angular/material/input";
 import { MatSortModule } from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { WorldPopulationService } from './services/world.population.service';
+import {HttpClientModule} from "@angular/common/http"
 @NgModule({
-    declarations: [WorldPopulationTableViewComponent],
+    declarations: [WorldPopulationTableViewComponent/*, WorldPopulationService*/],
     imports: [WorldPopulationRouting,
+        HttpClientModule,
          RouterModule, MatTableModule, CdkTableModule, MatIconModule, MatFormFieldModule,
           MatInputModule, MatSortModule, 
           MatPaginatorModule,
           FormsModule, CommonModule],
-    exports: [RouterModule, WorldPopulationTableViewComponent]
+    exports: [RouterModule, WorldPopulationTableViewComponent],
+    providers:[WorldPopulationService]
 })
 export class WorldPopulationModule { }
