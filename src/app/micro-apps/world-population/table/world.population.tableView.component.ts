@@ -4,6 +4,7 @@ import { Countries, keys, Country } from '../models/model.contries';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { WorldPopulationService } from '../services/world.population.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'world-table-view',
@@ -12,19 +13,27 @@ import { WorldPopulationService } from '../services/world.population.service';
 })
 export class WorldPopulationTableViewComponent implements OnInit {
 
-    dataSource = new MatTableDataSource(Countries);
+    dataSource = new MatTableDataSource();
     keys: String[];
-    key
+
     config: HeaderRename[];
+
     @ViewChild(MatSort, { static: true }) sort: MatSort;
+
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-    constructor(private worldPopulationService:WorldPopulationService) {
+
+    subscriptions: Subscription;
+
+    constructor(private worldPopulationService: WorldPopulationService) {
+
+    }
+    async ngOnInit(): Promise<void> {
+        this.subscriptions = new Subscription();
         this.keys = keys;
         this.keys.push("star");
         this.config = this.getConfig();
-        this.worldPopulationService.getPopulation().subscribe((c:Country[])=>  console.log(c));
-    }
-    ngOnInit(): void {
+        const countries: Promise<Country[]> = this.worldPopulationService.getPopulation().toPromise<Country[]>();
+        this.dataSource.data = await countries;
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
     }
@@ -62,9 +71,9 @@ export class WorldPopulationTableViewComponent implements OnInit {
 
             if (!isNaN(parseInt(cur[value])))
                 prev += parseInt(cur[value]);
-                else{
-                    console.log("--->",cur[value])
-                }
+            else {
+                //console.log("--->", cur[value])
+            }
             return prev;
         }, 0)
     }

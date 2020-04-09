@@ -9,7 +9,7 @@ app.get("/", (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     const jsonData: string = readFileSync(__dirname + "/db.json", { encoding: "utf8" });
-    res.json(JSON.parse(jsonData));
+    res.json(JSON.parse(jsonData).Countries);
 })
 
 const PORT = process.env.PORT || 3000;

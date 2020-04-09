@@ -12,6 +12,6 @@ export class WorldPopulationService
 
     }
     getPopulation():Observable<Country[]>{
-        return this.http.get<Country[]>("http://localhost:3000/").pipe(map((res:Country[])=> res));
+        return this.http.get<Country[]>("http://localhost:3000/").pipe(map((res)=> res));
     }
 }
