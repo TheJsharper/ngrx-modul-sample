@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "server":"nodemon --watch ./server/**/*.ts --ignore ./server/**/*.spec.ts --exec  ts-node ./server/index.ts",
+    "server": "nodemon --watch ./server/**/*.ts --ignore ./server/**/*.spec.ts --exec  ts-node ./server/index.ts",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
@@ -25,6 +25,8 @@
     "bootstrap": "4.4.1",
     "express": "^4.17.1",
     "rxjs": "~6.5.4",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
@@ -37,6 +39,8 @@
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
+    "@types/socket.io": "^2.1.4",
+    "@types/socket.io-client": "^1.4.32",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
