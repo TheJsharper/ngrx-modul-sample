@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminRoutingModule } from './micro-apps/admin/admin-routing.module';
 import { WorldPopulationRouting } from './micro-apps/world-population/world.population-routing.module';
+import { WorldPopulationChartsRoutingModule } from './micro-apps/world-population-charts/world.population.charts-routing.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { WorldPopulationRouting } from './micro-apps/world-population/world.popu
     BrowserAnimationsModule,
     AdminRoutingModule,
     WorldPopulationRouting,
+    WorldPopulationChartsRoutingModule,
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,

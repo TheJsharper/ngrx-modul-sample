@@ -8,6 +8,7 @@ const routes: Routes = [
     loadChildren: ()=> import('./micro-apps/admin/admin.module').then(m => m.AdminModule)
   },
   { path: 'population',  loadChildren: ()=> import('./micro-apps/world-population/world.population.module').then(m => m.WorldPopulationModule) },
+  { path: 'charts',  loadChildren: ()=> import('./micro-apps/world-population-charts/world.population.charts.module').then(m => m.WorldPopulationChartsModule) },
 ];
 
 @NgModule({

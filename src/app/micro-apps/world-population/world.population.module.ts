@@ -14,7 +14,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { WorldPopulationService } from './services/world.population.service';
 import {HttpClientModule} from "@angular/common/http"
 @NgModule({
-    declarations: [WorldPopulationTableViewComponent/*, WorldPopulationService*/],
+    declarations: [WorldPopulationTableViewComponent],
     imports: [WorldPopulationRouting,
         HttpClientModule,
          RouterModule, MatTableModule, CdkTableModule, MatIconModule, MatFormFieldModule,
