@@ -21,7 +21,7 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
     }
 
 
-    async ngOnInit(): Promise<void> {
+    public async ngOnInit(): Promise<void> {
         this.timeoutRef = [];
         const div = this.renderer.createElement('div');
         const text = this.renderer.createText('A simple chart-line');
@@ -59,7 +59,8 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
                     const colors: string[] = this.getBorderColors();
                     const background: string[] = [`rgba(255, 255, 2555, 0.0)`]
 
-                    this.chart.data.datasets.push({ label: 'of votes ' + next, data: this.getRandomData(), borderColor: colors, backgroundColor: background, borderWidth: 5 });
+                    this.chart.data.datasets.push({ pointStyle: "circle", 
+                    pointBorderWidth:2.2, pointBackgroundColor:["rgba(255,0,0,0.0)"],pointHoverBackgroundColor:["rgba(255,0,0,0.0)"], pointBorderColor: ["rgba(255,0,0,0.0)"], label: 'of votes ' + next, data: this.getRandomData(), borderColor: colors, backgroundColor: background, borderWidth: 5 });
                     next++;
                     this.chart.update();
                     this.update(next);
@@ -85,11 +86,11 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
 
     }
     private getRandomData(): number[] {
-        return Array(2).fill(0).map((_: number) => Math.abs(Math.floor(Math.random() * 20)))
+        return Array(2).fill(0).map((_: number) => Math.abs(Math.floor(Math.random() * 10_000_000)))
 
     }
     private getNextData(): number {
-        return Math.abs(Math.floor(Math.random() * 20));
+        return Math.abs(Math.floor(Math.random() * 10_000_000));
     }
 
     private getBorderColors(): string[] {
@@ -108,7 +109,7 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
             type: 'line',
             data: {
                 labels: this.getLabels(),
-                datasets: []
+                datasets: [],
             },
             options: {
                 scales: {
@@ -122,13 +123,18 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
                     duration: 1500,
                     animateRotate: true,
                     easing: "linear"
+                }, 
+                elements:{
+                    point:{
+                        backgroundColor: [`rgba(255,0, 0, 0.5)`],
+                    }
                 }
             }
         };
     }
 
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.chart.destroy();
         this.timeoutRef.forEach((ref: any) => clearTimeout(ref));
     }
