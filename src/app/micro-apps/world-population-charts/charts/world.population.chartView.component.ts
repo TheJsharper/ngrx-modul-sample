@@ -1,6 +1,9 @@
 import { Component, ElementRef, OnInit, Renderer2, OnDestroy } from "@angular/core";
 import * as Chart from 'chart.js';
 import { ChartConfiguration, ChartDataSets } from 'chart.js';
+import { WorldPopulationChartsService } from '../services/world.population.charts.services';
+import { AppStore } from '../../store/reducers';
+import {Store} from '@ngrx/store';
 
 @Component({
     selector: 'charts-view',
@@ -16,8 +19,9 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
     private chart: Chart;
     private timeoutRef: any[];
 
-    constructor(private renderer: Renderer2, private el: ElementRef) {
-
+    constructor(private renderer: Renderer2, private el: ElementRef, private worldPopulationChartsService: WorldPopulationChartsService, private store:Store<AppStore>) {
+        this.worldPopulationChartsService.connect();
+        this.store.subscribe((value:AppStore)=> console.log(" value from store--->", value));
     }
 
 

@@ -13,6 +13,8 @@ import { AppComponent } from './app.component';
 import { AdminRoutingModule } from './micro-apps/admin/admin-routing.module';
 import { WorldPopulationRouting } from './micro-apps/world-population/world.population-routing.module';
 import { WorldPopulationChartsRoutingModule } from './micro-apps/world-population-charts/world.population.charts-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './micro-apps/store/reducers';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { WorldPopulationChartsRoutingModule } from './micro-apps/world-populatio
     MatSidenavModule,
     MatListModule,
     MatButtonModule,
-    MatExpansionModule
+    MatExpansionModule,
+    StoreModule.forRoot(reducers,{metaReducers})
   ],
   providers: [],
   bootstrap: [AppComponent]
