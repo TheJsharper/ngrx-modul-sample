@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2 } from "@angular/core";
+import { Component, ElementRef, OnInit, Renderer2, OnDestroy } from "@angular/core";
 import * as Chart from 'chart.js';
 import { ChartConfiguration } from 'chart.js';
 
@@ -8,19 +8,21 @@ import { ChartConfiguration } from 'chart.js';
     styleUrls: ['world.population.chartView.component.scss']
 })
 
-export class WorldPopulationChartViewComponent implements OnInit {
+export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
 
 
 
     private ctx: CanvasRenderingContext2D;
-    chart;
+    private chart: Chart;
+    private timeoutRef: any[];
 
     constructor(private renderer: Renderer2, private el: ElementRef) {
 
     }
 
-    async ngOnInit(): Promise<void> {
 
+    async ngOnInit(): Promise<void> {
+        this.timeoutRef = [];
         const div = this.renderer.createElement('div');
         const text = this.renderer.createText('A simple chart-line');
 
@@ -41,79 +43,50 @@ export class WorldPopulationChartViewComponent implements OnInit {
 
         this.ctx = chartCanvas.getContext('2d');
 
-        const dataCanvas: any = this.getData();
-        this.chart = new Chart(this.ctx, {
-            type: "line",
-            data: dataCanvas, options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
+        const dataCanvas: any = this.getDataCanvas();
+        this.chart = new Chart(this.ctx, dataCanvas);
 
 
-        this.renderer.appendChild(this.el.nativeElement, div)
+        this.renderer.appendChild(this.el.nativeElement, div);
+        this.update(0);
+
     }
 
-    private getData(): any {
-        const data = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [
-                {
-                    label: "My First dataset",
-                    fillColor: "rgba(220,220,220,0.2)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: [65, 59, 80, 81, 56, 55, 40]
-                },
-                {
-                    label: "My Second dataset",
-                    fillColor: "rgba(151,187,205,0.2)",
-                    strokeColor: "rgba(151,187,205,1)",
-                    pointColor: "rgba(151,187,205,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(151,187,205,1)",
-                    data: [28, 48, 40, 19, 86, 27, 90]
-                }
-            ]
-        };
-        return data;
+    private update(next: number): void {
+        if (next < 20) {
+            this.timeoutRef.push(setTimeout(() => {
+                window.requestAnimationFrame((f: number) => {
+                    console.log("---->", this.chart.data);
+                    const colors: string[] = this.getBorderColors();
+                    const background:string[]= [`rgba(255, 255, 2555, 0.0)`]
+                    this.chart.data.datasets.push({ label: 'of votes ' + next, data: this.getRandomData(), borderColor: colors, backgroundColor: background, borderWidth: 5 });
+                    next++;
+                    this.chart.update();
+                    this.update(next);
+                });
+            }, 1000));
+
+        }
+
+    }
+    private getRandomData(): number[] {
+        return Array(7).fill(0).map((_: number) => Math.abs(Math.floor(Math.random() * 20)))
+
+    }
+
+    private getBorderColors(): string[] {
+
+
+        const next: number[] = Array(3).fill(0).map((_: number) => Math.abs(Math.floor(100 + Math.random() * (255 - 100))));
+        return [`rgba(${next[0]}, ${next[1]}, ${next[2]}, 0.5)`];
     }
 
     private getDataCanvas(): ChartConfiguration {
         return {
             type: 'line',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+                labels: ['Paraguay', 'Argentina', 'Brasil', 'Uruguay', 'Chile', 'Bolivia'],
+                datasets: []
             },
             options: {
                 scales: {
@@ -125,5 +98,11 @@ export class WorldPopulationChartViewComponent implements OnInit {
                 }
             }
         };
+    }
+
+
+    ngOnDestroy(): void {
+        this.chart.destroy();
+        this.timeoutRef.forEach((ref: any) => clearTimeout(ref));
     }
 }
