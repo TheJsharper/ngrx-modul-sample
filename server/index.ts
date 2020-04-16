@@ -32,18 +32,47 @@ httpServer.listen(PORT, () => {
     console.log(`Server is running in http://localhost:${PORT}`)
 });
 const streaming: Namespace = socket.of("/streaming");
+const fileProvider = new FileProvider();
 
+streaming.on("connect", async (socket: Socket) => {
 
-streaming.on("connection", async (socket: Socket) => {
+    
     console.log("connecting someone", socket.id);
 
-    const fileProvider = new FileProvider();
 
-    for await (const value of fileProvider.getPopulationByYear(1960)) {
-        console.log("--->", value);
-        streaming.emit("stream", value);
-    }
+    socket.on("requestByYear", async (request: { year: number }) => {
+
+        for await (const value of fileProvider.getPopulationByYear(request.year)) {
+            console.log("--->", value);
+            streaming.emit("responseByYear", value);
+        }
+
+    });
+
+
+    socket.on("requestByCountry", async (request: { country: string }) => {
+
+        for await (const value of fileProvider.getPopulationByCountry(request.country)) {
+            console.log("--->", value);
+            streaming.emit("responseByCountry", value);
+        }
+
+    });
+
+
+    socket.on("requestPopulation", async () => {
+
+        for await (const value of fileProvider.getCountryPopulation()) {
+            console.log("--->", value);
+            streaming.emit("responsePopulation", value);
+        }
+
+    });
+
+
 
 });
+
+
 
 

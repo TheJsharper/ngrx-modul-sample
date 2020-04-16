@@ -4,6 +4,7 @@ import { Country } from 'src/app/micro-apps/world-population/models/model.contri
 export class FileProvider {
 
     private countries: Country[];
+    
     private yearProperties: string[];
 
     private countryNames: string[];
@@ -20,7 +21,9 @@ export class FileProvider {
 
     constructor() {
         const jsonData: string = readFileSync(__dirname + "/db.json", { encoding: "utf8" });
+
         this.countries = JSON.parse(jsonData).Countries;
+
         this.yearProperties = Object.keys(this.countries[0]).filter((key: string) => key.startsWith("Year_"));
 
         this.countryNames = this.countries.map((country: Country) => country.Country);

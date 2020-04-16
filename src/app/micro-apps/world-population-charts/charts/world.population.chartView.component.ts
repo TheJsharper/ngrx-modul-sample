@@ -22,7 +22,9 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
     private chart: Chart;
     private timeoutRef: any[];
 
-    constructor(private renderer: Renderer2, private el: ElementRef, private worldPopulationChartsService: WorldPopulationChartsService, private store: Store<CountryState>) {
+    constructor(private renderer: Renderer2, private el: ElementRef, 
+        private worldPopulationChartsService: WorldPopulationChartsService, 
+        private store: Store<CountryState>) {
         this.worldPopulationChartsService.connect();
         this.store.pipe(select(selectAppStoreCountry)).subscribe((value: AppStoreCountry) => console.log("FROM STORE", value));
     }
