@@ -6,9 +6,26 @@ export const loadAllCounties: ActionCreator<string, () => TypedAction<string>> =
     "[Country Resolver] Load All Country"
 );
 
-export const allCountryLoaded: ActionCreator<string, (countryState:CountryState) => CountryState & TypedAction<string>>
+export const allByCountry: ActionCreator<string, (countryState: CountryState) => CountryState & TypedAction<string>>
     = createAction(
-        "[Load Courses Effect] All Courses Loaded",
+        "[Load Country] All By Country Loaded",
+        props<CountryState>()
+
+    );
+
+
+
+export const allByYear: ActionCreator<string, (countryState: CountryState) => CountryState & TypedAction<string>>
+    = createAction(
+        "[Load Country] All By Year Loaded",
+        props<CountryState>()
+
+    );
+
+
+export const allByPopulation: ActionCreator<string, (countryState: CountryState) => CountryState & TypedAction<string>>
+    = createAction(
+        "[Load Country] All By Population Loaded",
         props<CountryState>()
 
     );

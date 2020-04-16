@@ -4,8 +4,8 @@ import { ChartConfiguration, ChartDataSets } from 'chart.js';
 import { WorldPopulationChartsService } from '../services/world.population.charts.services';
 import { AppStore } from '../../store/reducers';
 import { Store, select } from '@ngrx/store';
-import { selectAppStoreCountry } from '../store/selectors/country.selectors';
-import { AppStoreCountry } from '../models/app.store.country';
+import { selectAppStoreCountryByCountry, selectAppStoreCountryByYear, selectAppStoreCountryByPopulation } from '../store/selectors/country.selectors';
+import { AppStoreCountry, CountryPropertries } from '../models/app.store.country';
 import { CountryState } from '../store/reducers/country.reducers';
 
 @Component({
@@ -22,14 +22,17 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
     private chart: Chart;
     private timeoutRef: any[];
 
-    constructor(private renderer: Renderer2, private el: ElementRef, 
-        private worldPopulationChartsService: WorldPopulationChartsService, 
+    constructor(private renderer: Renderer2, private el: ElementRef,
+        private worldPopulationChartsService: WorldPopulationChartsService,
         private store: Store<CountryState>) {
         this.worldPopulationChartsService.connect();
-        this.store.pipe(select(selectAppStoreCountry)).subscribe((value: AppStoreCountry) => console.log("FROM STORE", value));
+        this.store.pipe(select(selectAppStoreCountryByCountry)).subscribe((value: CountryPropertries) => console.log("FROM STORE BY COUNTRY", value));
+
+        this.store.pipe(select(selectAppStoreCountryByYear)).subscribe((value: CountryPropertries) => console.log("FROM STORE BY YEAR", value));
+
+        this.store.pipe(select(selectAppStoreCountryByPopulation)).subscribe((value: CountryPropertries) => console.log("FROM STORE BY POPULATION", value));
+
     }
-
-
     public async ngOnInit(): Promise<void> {
         this.timeoutRef = [];
         const div = this.renderer.createElement('div');
