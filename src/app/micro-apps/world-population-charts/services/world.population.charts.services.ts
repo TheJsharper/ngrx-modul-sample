@@ -19,7 +19,9 @@ export class WorldPopulationChartsService {
 
     this.socketClient.on("connect", () => {
 
-
+      //this.getByCountry("Paraguay"); perfect UI paraguay from 1960 => 2019;
+     // this.getByYear(1990);  all country from 1990
+      this.getPopulation() 
       console.log("Connecting .... status", this.socketClient.id, this.socketClient.connected, this.socketClient, "timeout---->", this.socketClient.io.timeout());
 
     });
@@ -53,10 +55,10 @@ export class WorldPopulationChartsService {
 
   }
 
-  public async getByContry(name: string): Promise<void> {
+  public async getByCountry(name: string): Promise<void> {
 
     return new Promise<void>((resolve: () => void) => {
-      const s = this.socketClient.emit("requestByCountry", { year: name });
+      const s = this.socketClient.emit("requestByCountry", { country: name });
       console.log("nsp--->", s.nsp);
       this.socketClient.on("responseByCountry", (payload) => {
         console.log(payload);

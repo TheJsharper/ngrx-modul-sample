@@ -55,6 +55,7 @@ export class FileProvider {
 
         const timeoutRef: any[] = [];
         for (const yp of this.YearProperties) {
+            console.log("--->", name)
             const country: Country = this.countries.find((c: Country) => c.Country === name);
             if (!country || country == undefined || country == null) {
                 console.log("empty")
@@ -66,7 +67,7 @@ export class FileProvider {
             }
 
         }
-        timeoutRef.forEach((sub: NodeJS.Timeout) => { console.log("--->", timeoutRef.length, sub.hasRef); clearTimeout(sub); })
+        timeoutRef.forEach((sub: NodeJS.Timeout) => { console.log("subscriptiosn--->", timeoutRef.length, sub); clearTimeout(sub); })
 
     }
 
