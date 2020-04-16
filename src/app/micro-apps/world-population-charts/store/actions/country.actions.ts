@@ -6,9 +6,9 @@ export const loadAllCounties: ActionCreator<string, () => TypedAction<string>> =
     "[Country Resolver] Load All Country"
 );
 
-export const allCountryLoaded: ActionCreator<string, (props: { country: CountryState }) => { country: CountryState } & TypedAction<string>>
+export const allCountryLoaded: ActionCreator<string, (CountryState) => CountryState & TypedAction<string>>
     = createAction(
         "[Load Courses Effect] All Courses Loaded",
-        props<{ country: CountryState }>()
+        props<CountryState>()
 
     );

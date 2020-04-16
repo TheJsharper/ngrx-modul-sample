@@ -12,7 +12,7 @@ export class WorldPopulationChartsService{
         this.socketClient.on("stream", (payload)=>{
             this.socketClient.emit('hi!');
             console.log(payload);
-            this.store.dispatch(allCountryLoaded(payload))
+            this.store.dispatch(allCountryLoaded({countries:payload}))
             
         });
         this.socketClient.on("connect", () => {

@@ -14,7 +14,9 @@ import { AdminRoutingModule } from './micro-apps/admin/admin-routing.module';
 import { WorldPopulationRouting } from './micro-apps/world-population/world.population-routing.module';
 import { WorldPopulationChartsRoutingModule } from './micro-apps/world-population-charts/world.population.charts-routing.module';
 import { StoreModule } from '@ngrx/store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import { reducers, metaReducers } from './micro-apps/store/reducers';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { reducers, metaReducers } from './micro-apps/store/reducers';
     MatListModule,
     MatButtonModule,
     MatExpansionModule,
-    StoreModule.forRoot(reducers,{metaReducers})
+    StoreModule.forRoot(reducers,{metaReducers}),
+    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
   ],
   providers: [],
   bootstrap: [AppComponent]

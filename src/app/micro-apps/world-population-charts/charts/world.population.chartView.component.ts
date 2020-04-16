@@ -3,7 +3,10 @@ import * as Chart from 'chart.js';
 import { ChartConfiguration, ChartDataSets } from 'chart.js';
 import { WorldPopulationChartsService } from '../services/world.population.charts.services';
 import { AppStore } from '../../store/reducers';
-import {Store} from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+import { selectAppStoreCountry } from '../store/selectors/country.selectors';
+import { AppStoreCountry } from '../models/app.store.country';
+import { CountryState } from '../store/reducers/country.reducers';
 
 @Component({
     selector: 'charts-view',
@@ -19,9 +22,9 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
     private chart: Chart;
     private timeoutRef: any[];
 
-    constructor(private renderer: Renderer2, private el: ElementRef, private worldPopulationChartsService: WorldPopulationChartsService, private store:Store<AppStore>) {
+    constructor(private renderer: Renderer2, private el: ElementRef, private worldPopulationChartsService: WorldPopulationChartsService, private store: Store<CountryState>) {
         this.worldPopulationChartsService.connect();
-        this.store.subscribe((value:AppStore)=> console.log(" value from store--->", value));
+        this.store.pipe(select(selectAppStoreCountry)).subscribe((value: AppStoreCountry) => console.log("FROM STORE", value));
     }
 
 
@@ -63,8 +66,10 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
                     const colors: string[] = this.getBorderColors();
                     const background: string[] = [`rgba(255, 255, 2555, 0.0)`]
 
-                    this.chart.data.datasets.push({ pointStyle: "circle", 
-                    pointBorderWidth:2.2, pointBackgroundColor:["rgba(255,0,0,0.0)"],pointHoverBackgroundColor:["rgba(255,0,0,0.0)"], pointBorderColor: ["rgba(255,0,0,0.0)"], label: 'of votes ' + next, data: this.getRandomData(), borderColor: colors, backgroundColor: background, borderWidth: 5 });
+                    this.chart.data.datasets.push({
+                        pointStyle: "circle",
+                        pointBorderWidth: 2.2, pointBackgroundColor: ["rgba(255,0,0,0.0)"], pointHoverBackgroundColor: ["rgba(255,0,0,0.0)"], pointBorderColor: ["rgba(255,0,0,0.0)"], label: 'of votes ' + next, data: this.getRandomData(), borderColor: colors, backgroundColor: background, borderWidth: 5
+                    });
                     next++;
                     this.chart.update();
                     this.update(next);
@@ -127,9 +132,9 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
                     duration: 1500,
                     animateRotate: true,
                     easing: "linear"
-                }, 
-                elements:{
-                    point:{
+                },
+                elements: {
+                    point: {
                         backgroundColor: [`rgba(255,0, 0, 0.5)`],
                     }
                 }
