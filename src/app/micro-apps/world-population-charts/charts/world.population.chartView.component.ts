@@ -65,7 +65,7 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
     }
 
     private update(next: number): void {
-        if (next < 2) {
+        if (next < 5) {
             this.timeoutRef.push(setTimeout(() => {
                 window.requestAnimationFrame((f: number) => {
                     const colors: string[] = this.getBorderColors();
@@ -81,7 +81,7 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
                 });
             }, 1000));
 
-        } else if (next >= 2 && next <= 100) {
+        } else if (next >= 5 && next <= 100) {
 
             this.timeoutRef.push(setTimeout(() => {
                 window.requestAnimationFrame((f: number) => {
@@ -120,7 +120,7 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
     }
     private getDataCanvas(): ChartConfiguration {
         return {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: this.getLabels(),
                 datasets: [],

@@ -19,6 +19,7 @@ const httpServer = /**/createServer(app); //new Server(app);
 const socket = io(httpServer, { origins: ["http://127.0.0.1:4200", "*:*", "http://localhost:3000"], path: "/streaming", /*transports:['WebSocket', 'Flash Socket', 'AJAX long-polling'],*/ });
 //socket.origins("http://localhost:4200/streaming");
 
+const fileProvider = new FileProvider();
 app.get("/", (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -26,17 +27,34 @@ app.get("/", (req, res) => {
     res.json(JSON.parse(jsonData).Countries);
 })
 
+app.get("/countries", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.json({ countries: fileProvider.CountryNames });
+});
+app.get("/years", (req, res) => {
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
+    const result: string[] = fileProvider.YearProperties.map((year: string) => year.split('_')[1]);
+    
+    res.json({ years: result });
+
+})
+
 const PORT = process.env.PORT || 3000;
 
 httpServer.listen(PORT, () => {
     console.log(`Server is running in http://localhost:${PORT}`)
 });
+
 const streaming: Namespace = socket.of("/streaming");
-const fileProvider = new FileProvider();
+
 
 streaming.on("connect", async (socket: Socket) => {
 
-    
+
     console.log("connecting someone", socket.id);
 
 

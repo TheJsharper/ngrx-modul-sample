@@ -4,7 +4,7 @@ import { Country } from 'src/app/micro-apps/world-population/models/model.contri
 export class FileProvider {
 
     private countries: Country[];
-    
+
     private yearProperties: string[];
 
     private countryNames: string[];
@@ -55,7 +55,6 @@ export class FileProvider {
 
         const timeoutRef: any[] = [];
         for (const yp of this.YearProperties) {
-            console.log("--->", name)
             const country: Country = this.countries.find((c: Country) => c.Country === name);
             if (!country || country == undefined || country == null) {
                 console.log("empty")
@@ -74,7 +73,7 @@ export class FileProvider {
     public async * getPopulationByYear(year: number): AsyncIterableIterator<{ country: string, year: string, value: string }> {
 
         const timeoutRef: any[] = [];
-        const yearProperty:string = `Year_${year}`;
+        const yearProperty: string = `Year_${year}`;
         for (const cn of this.CountryNames) {
             const country: Country = this.countries.find((c: Country) => c.Country === cn);
             if (!country || country == undefined || country == null) {
