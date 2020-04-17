@@ -1,8 +1,7 @@
-import { AppStoreCountry, CountryPropertries } from '../../models/app.store.country';
-import { createReducer, ActionCreator } from '@ngrx/store';
-import { CountryActions } from '../actions/action-types';
-import { on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { TypedAction } from '@ngrx/store/src/models';
+import { AppStoreCountry, CountryPropertries } from '../../models/app.store.country';
+import { CountryActions } from '../actions/action-types';
 
 
 export interface CountryState {
@@ -75,3 +74,7 @@ export const countryReducer = createReducer(initialCountryState,
 
 
 )
+
+
+
+
