@@ -20,9 +20,7 @@ export class WorldPopulationChartsService {
 
     this.socketClient.on("connect", () => {
 
-      this.getByCountry("Paraguay"); //perfect UI paraguay from 1960 => 2019;
-      //this.getByYear(1990); // all country from 1990
-     // this.getPopulation()
+      this.getByCountry("Paraguay");
       console.log("Connecting .... status", this.socketClient.id, this.socketClient.connected, this.socketClient, "timeout---->", this.socketClient.io.timeout());
 
     });
