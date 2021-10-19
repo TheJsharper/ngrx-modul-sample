@@ -16113,4 +16113,4 @@ export const Countries:Country[]=[
       "Year_2016": 16150362
     }
   ];
-  export const keys:String[] =   Object.keys(Countries[0]);//.map((k:string)=> k.includes("_")? k.split("_")[1]: k );
+  export const keys:string[] =   Object.keys(Countries[0]);//.map((k:string)=> k.includes("_")? k.split("_")[1]: k );

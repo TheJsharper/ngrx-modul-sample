@@ -55,7 +55,7 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
 
         this.ctx = chartCanvas.getContext('2d');
 
-        const dataCanvas: any = this.getDataCanvas();
+        const dataCanvas: ChartConfiguration = this.getDataCanvas();
         this.chart = new Chart(this.ctx, dataCanvas);
 
 
@@ -73,7 +73,14 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
 
                     this.chart.data.datasets.push({
                         pointStyle: "circle",
-                        pointBorderWidth: 2.2, pointBackgroundColor: ["rgba(255,0,0,0.0)"], pointHoverBackgroundColor: ["rgba(255,0,0,0.0)"], pointBorderColor: ["rgba(255,0,0,0.0)"], label: 'of votes ' + next, data: this.getRandomData(), borderColor: colors, backgroundColor: background, borderWidth: 5
+                        pointBorderWidth: 2.2,
+                        pointBackgroundColor: ["rgba(255,0,0,0.0)"],
+                        pointHoverBackgroundColor: ["rgba(255,0,0,0.0)"], 
+                        pointBorderColor: ["rgba(255,0,0,0.0)"], label: 'of votes ' + next,
+                        data: this.getRandomData(),
+                        borderColor: colors, 
+                        backgroundColor: background,
+                        borderWidth: 5
                     });
                     next++;
                     this.chart.update();

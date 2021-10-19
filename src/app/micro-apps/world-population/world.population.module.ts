@@ -1,3 +1,4 @@
+import { WorldPopulationInitService } from './services/world.population.init.service';
 import { CommonModule } from '@angular/common';
 import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
@@ -22,6 +23,6 @@ import {HttpClientModule} from "@angular/common/http"
           MatPaginatorModule,
           FormsModule, CommonModule],
     exports: [RouterModule, WorldPopulationTableViewComponent],
-    providers:[WorldPopulationService]
+    providers:[WorldPopulationService, WorldPopulationInitService]
 })
 export class WorldPopulationModule { }

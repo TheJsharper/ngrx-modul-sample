@@ -1,3 +1,4 @@
+import { WorldPopulationInitService } from './../services/world.population.init.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Countries, keys, Country } from '../models/model.contries';
@@ -14,7 +15,8 @@ import { Subscription } from 'rxjs';
 export class WorldPopulationTableViewComponent implements OnInit {
 
     dataSource = new MatTableDataSource();
-    keys: String[];
+
+    keys: string[];
 
     config: HeaderRename[];
 
@@ -22,36 +24,34 @@ export class WorldPopulationTableViewComponent implements OnInit {
 
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-    subscriptions: Subscription;
 
-    constructor(private worldPopulationService: WorldPopulationService) {
+    constructor(
+        private worldPopulationService: WorldPopulationService,
+        private worldPopulationInitService: WorldPopulationInitService        
+        ) {
 
     }
     async ngOnInit(): Promise<void> {
-        this.subscriptions = new Subscription();
+
         this.keys = keys;
+
         this.keys.push("star");
-        this.config = this.getConfig();
+
+        this.config = this.worldPopulationInitService.getConfig();
+
         const countries: Promise<Country[]> = this.worldPopulationService.getPopulation().toPromise<Country[]>();
+
         this.dataSource.data = await countries;
+
         this.dataSource.sort = this.sort;
+
         this.dataSource.paginator = this.paginator;
+
     }
     getValue(element: any, key: string): any {
         return element[key];
     }
-    private getConfig(): HeaderRename[] {
-        const result: HeaderRename[] = this.keys.reduce((prev: HeaderRename[], cur: string) => {
-            const newObject: HeaderRename = {
-                property: cur,
-                name: cur.includes("_") ? cur.split("_")[1] : cur
-            };
-            prev.push(newObject);
-            return prev;
-        }, []);
-        result.push({ property: "star", name: "star" });
-        return result;
-    }
+   
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -71,9 +71,7 @@ export class WorldPopulationTableViewComponent implements OnInit {
 
             if (!isNaN(parseInt(cur[value])))
                 prev += parseInt(cur[value]);
-            else {
-                //console.log("--->", cur[value])
-            }
+            
             return prev;
         }, 0)
     }
