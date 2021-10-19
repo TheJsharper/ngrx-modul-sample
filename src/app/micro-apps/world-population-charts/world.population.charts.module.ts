@@ -5,12 +5,13 @@ import { WorldPopulationChartsService } from './services/world.population.charts
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { countryReducer } from './store/reducers/country.reducers';
+import { WorldPopulationChartsNextSeries } from "./services/world.population.charts.next.series";
 
 @NgModule({
 
     declarations:[WorldPopulationChartViewComponent],
     imports:[WorldPopulationChartsRoutingModule, StoreModule.forFeature("countries", countryReducer)],
     exports:[RouterModule],
-    providers:[WorldPopulationChartsService]
+    providers:[WorldPopulationChartsService, WorldPopulationChartsNextSeries]
 })
 export class WorldPopulationChartsModule{}
