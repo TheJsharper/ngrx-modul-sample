@@ -19,13 +19,27 @@ export class WorldPopulationChartsInit{
     }
 
     private static  getChartConfiguration(): ChartConfiguration {
+        const labels:string[] = this.getLabels();
+        const itemsOne:string = this.getBorderColor();
+        const itemsTwo:string = this.getBorderColor();
         return {
             type: 'bar',
             
             data: {
 
-                labels: this.getLabels(),
-                datasets: [{ label:"Austria", backgroundColor:this.getBorderColors(), data:[], fill:false}, {label:"Germany", backgroundColor:this.getBorderColors(), data:[], fill:false }],
+                labels,
+                datasets: [{ 
+                    label:"Austria",
+                    backgroundColor: Array(labels.length).fill(itemsOne),
+                    data:[],
+                    borderColor: Array(labels.length).fill(itemsOne)
+                },
+                 {
+                label:"Germany", 
+                backgroundColor:Array(labels.length).fill(itemsTwo),
+                data:[],
+                borderColor:Array(labels.length).fill(itemsTwo)
+             }],
             },
             options: {
                 
@@ -61,9 +75,9 @@ export class WorldPopulationChartsInit{
         return Array(2).fill(0).map((_: number) => Math.abs(Math.floor(Math.random() * 10_000_000)))
 
     }
-    private static getBorderColors(): string[] {
+    private static getBorderColor(): string {
 
        const  [red, green, blue] =Array(3).fill(0).map((_: number) => Math.abs(Math.floor(100 + Math.random() * (255 - 100))));
-       return [`rgba(${red}, ${green}, ${blue}, 0.5)`];
+       return `rgba(${red}, ${green}, ${blue}, 0.5)`;
     }
 }
