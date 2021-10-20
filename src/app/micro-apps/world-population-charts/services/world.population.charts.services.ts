@@ -23,7 +23,7 @@ export class WorldPopulationChartsService {
 
       this.getByCountry("Paraguay");
       this.getByCountry("Bolivia");
-     // this.getByYear(2000);
+      this.getByYear(2000);
      // this.getPopulation();
       console.log("Connecting .... status", this.socketClient.id, this.socketClient.connected, this.socketClient, "timeout---->", this.socketClient.io.timeout());
 
@@ -48,8 +48,7 @@ export class WorldPopulationChartsService {
       const s = this.socketClient.emit("requestByYear", { year: year });
       console.log("nsp--->", s.nsp);
       this.socketClient.on("responseByYear", (payload: CountryPropertries) => {
-        // console.log(payload);
-        this.store.dispatch(allByYear({ countries: { byYear: payload, byCountry: undefined, byPopulation: undefined,  countryEntities:undefined  } }));
+        this.store.dispatch(allByYear({ countryProperties:payload }));
         
         resolve();
 
@@ -84,8 +83,7 @@ export class WorldPopulationChartsService {
       const s = this.socketClient.emit("requestPopulation");
       console.log("nsp--->", s.nsp);
       this.socketClient.on("responsePopulation", (payload: CountryPropertries) => {
-        //  console.log(payload);
-        this.store.dispatch(allByPopulation({ countries: { byPopulation: payload, byYear: undefined, byCountry: undefined, countryEntities:undefined } }))
+        this.store.dispatch(allByPopulation({ countryProperties:payload}))
         resolve();
 
       });

@@ -52,42 +52,29 @@ export const countryReducer = createReducer(initialCountryState,
 
 
 
-    on(CountryActions.allByYear, (state: CountryState, action: CountryState & TypedAction<string>) => {
+    on(CountryActions.allByYear, (state: CountryState, action: {countryProperties: CountryPropertries} & TypedAction<string>) => {
 
-        let newStateByCountry: CountryPropertries = undefined;
-        let newStateByPopulation: CountryPropertries = undefined;
-
-        if (state.countries) {
-            newStateByCountry = { ...state.countries.byCountry };
-            newStateByPopulation = { ...state.countries.byPopulation };
-        }
-
+      
         return {
             countries: {
-                byCountry: newStateByCountry,
-                byPopulation: newStateByPopulation,
-                byYear: action.countries.byYear,
+                byCountry: state.countries.byCountry,
+                byPopulation: state.countries.byPopulation,
+                byYear: action.countryProperties,
                 countryEntities: state.countries.countryEntities
             }
         }
     }),
 
 
-    on(CountryActions.allByPopulation, (state: CountryState, action: CountryState & TypedAction<string>) => {
+    on(CountryActions.allByPopulation, (state: CountryState, action: {countryProperties: CountryPropertries} & TypedAction<string>) => {
 
-        let newStateByCountry: CountryPropertries = undefined;
-        let newStateByYear: CountryPropertries = undefined;
-
-        if (state.countries) {
-            newStateByCountry = { ...state.countries.byCountry };
-            newStateByYear = { ...state.countries.byYear };
-        }
+       
 
         return {
             countries: {
-                byCountry: newStateByCountry,
-                byPopulation: action.countries.byPopulation,
-                byYear: newStateByYear,
+                byCountry: state.countries.byCountry,
+                byPopulation: action.countryProperties,
+                byYear: state.countries.byYear,
                 countryEntities: state.countries.countryEntities
             }
         }
