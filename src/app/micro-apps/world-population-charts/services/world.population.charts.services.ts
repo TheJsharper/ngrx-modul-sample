@@ -65,8 +65,8 @@ export class WorldPopulationChartsService {
       const s = this.socketClient.emit("requestByCountry", { country: name });
       console.log("nsp--->", s.nsp);
       this.socketClient.on("responseByCountry", (payload: CountryPropertries) => {
-        //console.log(payload);
-       // this.store.dispatch(allByCountry({ countries: { byCountry: payload, byPopulation: undefined, byYear: undefined, countryEntities:undefined  } }))
+      
+        this.store.dispatch(allByCountry({ countryProperties:payload} ));
         this.store.dispatch(allByCountryEntities({ countryProperties:payload}))
         resolve();
 

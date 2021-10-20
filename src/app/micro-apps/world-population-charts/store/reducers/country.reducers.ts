@@ -1,3 +1,4 @@
+
 import { createReducer, on } from '@ngrx/store';
 import { TypedAction } from '@ngrx/store/src/models';
 import { AppStoreCountry, CountryPropertries } from '../../models/app.store.country';
@@ -14,37 +15,23 @@ export const initialCountryState: CountryState = {
 
 export const countryReducer = createReducer(initialCountryState,
 
-    on(CountryActions.allByCountry, (state: CountryState, action) => {
-        let newStateByYear: CountryPropertries = undefined;
-        let newStateByPopulation: CountryPropertries = undefined;
-        let newStateConutryEntites:{[id:string]: CountryPropertries[]} = undefined;
-
-        if (state.countries) {
-            newStateByYear = { ...state.countries.byYear };
-            newStateByPopulation = { ...state.countries.byPopulation };
-            newStateConutryEntites ={...state.countries.countryEntities};
-        }
+    on(CountryActions.allByCountry, (state: CountryState, action:{countryProperties: CountryPropertries}) => {
+       
         return {
             countries: {
-                byCountry: action.countries.byCountry,
-                byPopulation: newStateByPopulation,
-                byYear: newStateByYear,
-                countryEntities: newStateConutryEntites
+                byCountry: action.countryProperties,
+                byPopulation: state.countries.byPopulation,
+                byYear: state.countries.byYear,
+                countryEntities: state.countries.countryEntities
             }
         }
     }),
 
 
-    on(CountryActions.allByCountryEntities, (state: CountryState, action) => {
-        let newStateByYear: CountryPropertries = undefined;
-        let newStateByPopulation: CountryPropertries = undefined;
+    on(CountryActions.allByCountryEntities, (state: CountryState, action:{countryProperties: CountryPropertries}) => {
+       
         let current:{[id:string]: CountryPropertries[]} = state.countries.countryEntities;
-        console.log("REDUDER====>", action, "\n", current, "\n  State", state);
-        if (state.countries) {
-            newStateByYear = { ...state.countries.byYear };
-            newStateByPopulation = { ...state.countries.byPopulation };
-            
-            if(current == undefined) current = {};
+        if(current == undefined) current = {};
                 if(Object.keys(current).filter((value:string)=> value ==action.countryProperties.country.toLowerCase()).length == 1){
                         
                     console.log("===>", current)
@@ -52,12 +39,12 @@ export const countryReducer = createReducer(initialCountryState,
                 }else{
                     current[action.countryProperties.country.toLowerCase()] = [action.countryProperties];
                 }
-        }
+        
         return {
             countries: {
                 byCountry: state.countries.byCountry,
-                byPopulation: newStateByPopulation,
-                byYear: newStateByYear,
+                byPopulation: state.countries.byPopulation,
+                byYear: state.countries.byYear,
                 countryEntities: current
             }
         }
