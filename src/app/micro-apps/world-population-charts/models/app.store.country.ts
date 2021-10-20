@@ -1,7 +1,8 @@
 export interface AppStoreCountry {
-    byYear: CountryPropertries;
-    byCountry: CountryPropertries;
-    byPopulation: CountryPropertries;
+    byYear?: CountryPropertries;
+    byCountry?: CountryPropertries;
+    byPopulation?: CountryPropertries;
+    countryEntities?: {[id:string]:CountryPropertries[]}
 }
 export interface CountryPropertries {
     country: string,

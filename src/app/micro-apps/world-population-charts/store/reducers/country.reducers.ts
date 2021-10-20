@@ -5,28 +5,60 @@ import { CountryActions } from '../actions/action-types';
 
 
 export interface CountryState {
-    countries: AppStoreCountry
+    countries?: AppStoreCountry
 }
 
 export const initialCountryState: CountryState = {
-    countries: undefined
+    countries: {}
 };
 
 export const countryReducer = createReducer(initialCountryState,
 
-    on(CountryActions.allByCountry, (state: CountryState, action: CountryState & TypedAction<string>) => {
+    on(CountryActions.allByCountry, (state: CountryState, action) => {
         let newStateByYear: CountryPropertries = undefined;
         let newStateByPopulation: CountryPropertries = undefined;
+        let newStateConutryEntites:{[id:string]: CountryPropertries[]} = undefined;
 
         if (state.countries) {
             newStateByYear = { ...state.countries.byYear };
             newStateByPopulation = { ...state.countries.byPopulation };
+            newStateConutryEntites ={...state.countries.countryEntities};
         }
         return {
             countries: {
                 byCountry: action.countries.byCountry,
                 byPopulation: newStateByPopulation,
-                byYear: newStateByYear
+                byYear: newStateByYear,
+                countryEntities: newStateConutryEntites
+            }
+        }
+    }),
+
+
+    on(CountryActions.allByCountryEntities, (state: CountryState, action) => {
+        let newStateByYear: CountryPropertries = undefined;
+        let newStateByPopulation: CountryPropertries = undefined;
+        let current:{[id:string]: CountryPropertries[]} = state.countries.countryEntities;
+        console.log("REDUDER====>", action, "\n", current, "\n  State", state);
+        if (state.countries) {
+            newStateByYear = { ...state.countries.byYear };
+            newStateByPopulation = { ...state.countries.byPopulation };
+            
+            if(current == undefined) current = {};
+                if(Object.keys(current).filter((value:string)=> value ==action.countryProperties.country.toLowerCase()).length == 1){
+                        
+                    console.log("===>", current)
+                        current[action.countryProperties.country.toLowerCase()].push(action.countryProperties);
+                }else{
+                    current[action.countryProperties.country.toLowerCase()] = [action.countryProperties];
+                }
+        }
+        return {
+            countries: {
+                byCountry: state.countries.byCountry,
+                byPopulation: newStateByPopulation,
+                byYear: newStateByYear,
+                countryEntities: current
             }
         }
     }),
@@ -47,7 +79,8 @@ export const countryReducer = createReducer(initialCountryState,
             countries: {
                 byCountry: newStateByCountry,
                 byPopulation: newStateByPopulation,
-                byYear: action.countries.byYear
+                byYear: action.countries.byYear,
+                countryEntities: state.countries.countryEntities
             }
         }
     }),
@@ -67,7 +100,8 @@ export const countryReducer = createReducer(initialCountryState,
             countries: {
                 byCountry: newStateByCountry,
                 byPopulation: action.countries.byPopulation,
-                byYear: newStateByYear
+                byYear: newStateByYear,
+                countryEntities: state.countries.countryEntities
             }
         }
     }),

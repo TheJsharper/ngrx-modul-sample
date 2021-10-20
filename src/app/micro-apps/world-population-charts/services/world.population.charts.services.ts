@@ -1,3 +1,4 @@
+import { allByCountryEntities } from './../store/actions/country.actions';
 import { Injectable } from "@angular/core";
 import { Store } from '@ngrx/store';
 import * as io from 'socket.io-client';
@@ -21,6 +22,9 @@ export class WorldPopulationChartsService {
     this.socketClient.on("connect", () => {
 
       this.getByCountry("Paraguay");
+      this.getByCountry("Bolivia");
+     // this.getByYear(2000);
+     // this.getPopulation();
       console.log("Connecting .... status", this.socketClient.id, this.socketClient.connected, this.socketClient, "timeout---->", this.socketClient.io.timeout());
 
     });
@@ -45,7 +49,8 @@ export class WorldPopulationChartsService {
       console.log("nsp--->", s.nsp);
       this.socketClient.on("responseByYear", (payload: CountryPropertries) => {
         // console.log(payload);
-        this.store.dispatch(allByYear({ countries: { byYear: payload, byCountry: undefined, byPopulation: undefined } }))
+        this.store.dispatch(allByYear({ countries: { byYear: payload, byCountry: undefined, byPopulation: undefined,  countryEntities:undefined  } }));
+        
         resolve();
 
       });
@@ -61,7 +66,8 @@ export class WorldPopulationChartsService {
       console.log("nsp--->", s.nsp);
       this.socketClient.on("responseByCountry", (payload: CountryPropertries) => {
         //console.log(payload);
-        this.store.dispatch(allByCountry({ countries: { byCountry: payload, byPopulation: undefined, byYear: undefined } }))
+       // this.store.dispatch(allByCountry({ countries: { byCountry: payload, byPopulation: undefined, byYear: undefined, countryEntities:undefined  } }))
+        this.store.dispatch(allByCountryEntities({ countryProperties:payload}))
         resolve();
 
       });
@@ -79,7 +85,7 @@ export class WorldPopulationChartsService {
       console.log("nsp--->", s.nsp);
       this.socketClient.on("responsePopulation", (payload: CountryPropertries) => {
         //  console.log(payload);
-        this.store.dispatch(allByPopulation({ countries: { byPopulation: payload, byYear: undefined, byCountry: undefined } }))
+        this.store.dispatch(allByPopulation({ countries: { byPopulation: payload, byYear: undefined, byCountry: undefined, countryEntities:undefined } }))
         resolve();
 
       });
