@@ -35,7 +35,6 @@ export class WorldPopulationChartsNextSeries{
     private updateSeries(chartSeriesParameters:ChartSeriesParameter, chartDataSets:ChartDataSets):void{
         chartDataSets.data.push(this.getNextData());
         chartSeriesParameters.chart.update();
-        console.log("-----X Rendering", chartDataSets);
     }
     private getNextData(): number {
         return Math.abs(Math.floor(Math.random() * 10_000_000));
