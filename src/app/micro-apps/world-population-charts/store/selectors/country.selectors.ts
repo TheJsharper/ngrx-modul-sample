@@ -8,25 +8,26 @@ export const selectCountryState: MemoizedSelector<AppStore, CountryState> = crea
 
 export const selectAppStoreCountryByCountry: MemoizedSelector<CountryState, CountryPropertries> = createSelector(
     selectCountryState,
-    (countryState: CountryState) => {
-        const countries = countryState.countries; 
-        return countries? countries.byCountry: undefined
-    }
+    (countryState: CountryState) => 
+    countryState.countries.byCountry
+    
+);
+export const selectAppStoreEntitiesCountryByCountry: MemoizedSelector<CountryState, {[id:string]:CountryPropertries[]}> = createSelector(
+    selectCountryState,
+    (countryState: CountryState) => 
+    countryState.countries.countryEntities
+    
 );
 
 export const selectAppStoreCountryByYear: MemoizedSelector<CountryState, CountryPropertries> = createSelector(
     selectCountryState,
-    (countryState: CountryState) => {
-        const countries = countryState.countries; 
-        return countries ? countries.byYear: undefined  
-    }
+    (countryState: CountryState) =>  countryState.countries.byYear    
 );
 
 
 export const selectAppStoreCountryByPopulation: MemoizedSelector<CountryState, CountryPropertries> = createSelector(
     selectCountryState,
-    (countryState: CountryState) => {
-        const countries = countryState.countries; 
-        return countries? countries.byPopulation: undefined; 
-    }
+    (countryState: CountryState) => 
+        countryState. countries.byPopulation 
+
 );

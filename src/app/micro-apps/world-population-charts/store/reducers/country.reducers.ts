@@ -1,8 +1,12 @@
 
+import { Countries } from './../../../world-population/models/model.contries';
+
 import { createReducer, on } from '@ngrx/store';
 import { TypedAction } from '@ngrx/store/src/models';
 import { AppStoreCountry, CountryPropertries } from '../../models/app.store.country';
 import { CountryActions } from '../actions/action-types';
+
+import { cloneDeep} from'lodash';
 
 
 export interface CountryState {
@@ -19,9 +23,7 @@ export const countryReducer = createReducer(initialCountryState,
        
         return {
             countries: {
-                byCountry: action.countryProperties,
-                byPopulation: state.countries.byPopulation,
-                byYear: state.countries.byYear,
+                ...state.countries,
                 countryEntities: state.countries.countryEntities
             }
         }
@@ -30,21 +32,23 @@ export const countryReducer = createReducer(initialCountryState,
 
     on(CountryActions.allByCountryEntities, (state: CountryState, action:{countryProperties: CountryPropertries}) => {
        
-        let current:{[id:string]: CountryPropertries[]} = state.countries.countryEntities;
+        let current:{[id:string]: CountryPropertries[]}= cloneDeep(state.countries.countryEntities);
+        const key:string = action.countryProperties.country.toLowerCase();
         if(current == undefined) current = {};
-                if(Object.keys(current).filter((value:string)=> value ==action.countryProperties.country.toLowerCase()).length == 1){
+                if(Object.keys(current).filter((value:string)=> value ==key).length == 1){
                         
-                    console.log("===>", current)
-                        current[action.countryProperties.country.toLowerCase()].push(action.countryProperties);
+                    
+                    current[key].push(action.countryProperties);
+                       
+
                 }else{
-                    current[action.countryProperties.country.toLowerCase()] = [action.countryProperties];
+                    const value: CountryPropertries[] = [action.countryProperties];
+                    current[key] = value;
                 }
         
         return {
             countries: {
-                byCountry: state.countries.byCountry,
-                byPopulation: state.countries.byPopulation,
-                byYear: state.countries.byYear,
+                ...state.countries,
                 countryEntities: current
             }
         }
@@ -57,10 +61,8 @@ export const countryReducer = createReducer(initialCountryState,
       
         return {
             countries: {
-                byCountry: state.countries.byCountry,
-                byPopulation: state.countries.byPopulation,
+                ...state.countries,
                 byYear: action.countryProperties,
-                countryEntities: state.countries.countryEntities
             }
         }
     }),
@@ -72,10 +74,8 @@ export const countryReducer = createReducer(initialCountryState,
 
         return {
             countries: {
-                byCountry: state.countries.byCountry,
-                byPopulation: action.countryProperties,
-                byYear: state.countries.byYear,
-                countryEntities: state.countries.countryEntities
+                ...state.countries,
+                byPopulation: action.countryProperties
             }
         }
     }),

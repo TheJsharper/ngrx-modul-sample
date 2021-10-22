@@ -1,19 +1,18 @@
-import { WorldPopulationInitService } from './services/world.population.init.service';
+import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import {CdkTableModule} from '@angular/cdk/table';
 import { RouterModule } from '@angular/router';
+import { WorldPopulationInitService } from './services/world.population.init.service';
 import { WorldPopulationTableViewComponent } from './table/world.population.tableView.component';
 import { WorldPopulationRouting } from './world.population-routing.module';
-import { MatInputModule } from "@angular/material/input";
-import { MatSortModule } from '@angular/material/sort';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import { WorldPopulationService } from './services/world.population.service';
-import {HttpClientModule} from "@angular/common/http"
 @NgModule({
     declarations: [WorldPopulationTableViewComponent],
     imports: [WorldPopulationRouting,
@@ -23,6 +22,6 @@ import {HttpClientModule} from "@angular/common/http"
           MatPaginatorModule,
           FormsModule, CommonModule],
     exports: [RouterModule, WorldPopulationTableViewComponent],
-    providers:[WorldPopulationService, WorldPopulationInitService]
+    providers:[ WorldPopulationInitService]
 })
 export class WorldPopulationModule { }

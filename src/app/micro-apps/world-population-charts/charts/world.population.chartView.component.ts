@@ -6,7 +6,7 @@ import { ChartSeriesParameter } from "../models/world.chart.view.model";
 import { WorldPopulationChartsNextSeries } from '../services/world.population.charts.next.series';
 import { WorldPopulationChartsService } from '../services/world.population.charts.services';
 import { CountryState } from '../store/reducers/country.reducers';
-import { selectAppStoreCountryByCountry, selectAppStoreCountryByPopulation, selectAppStoreCountryByYear } from '../store/selectors/country.selectors';
+import { selectAppStoreCountryByCountry,selectAppStoreEntitiesCountryByCountry, selectAppStoreCountryByPopulation, selectAppStoreCountryByYear } from '../store/selectors/country.selectors';
 import { WorldPopulationChartsInit } from '../utilities/world.population.charts.init';
 
 @Component({
@@ -37,6 +37,10 @@ export class WorldPopulationChartViewComponent implements OnInit, OnDestroy {
         this.store.pipe(select(selectAppStoreCountryByYear)).subscribe((value: CountryPropertries) => console.log("FROM STORE BY YEAR", value));
 
         this.store.pipe(select(selectAppStoreCountryByPopulation)).subscribe((value: CountryPropertries) => console.log("FROM STORE BY POPULATION", value));
+
+        
+        this.store.pipe(select(selectAppStoreEntitiesCountryByCountry)).subscribe((value:{[key:string] :CountryPropertries[]}) => console.log("FROM STORE BY ENTITIES", value));
+
 
     }
     public ngOnInit(): void {
