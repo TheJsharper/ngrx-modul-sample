@@ -61,13 +61,6 @@ export interface Country {
 }
 
 
-
-
-
-/*export interface Countries{
-    data:Country[];
-}*/
-
 export const Countries:Country[]=[
     {
       "Country": "Aruba",

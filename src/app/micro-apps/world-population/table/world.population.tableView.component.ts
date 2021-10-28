@@ -1,11 +1,11 @@
-import { WorldPopulationInitService } from './../services/world.population.init.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { Countries, keys, Country } from '../models/model.contries';
-import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Countries, Country, keys } from '../models/model.contries';
 import { WorldPopulationService } from '../services/world.population.service';
-import { Subscription } from 'rxjs';
+import { HeaderRename } from '../view-models/view-models';
+import { WorldPopulationInitService } from './../services/world.population.init.service';
 
 @Component({
     selector: 'world-table-view',
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class WorldPopulationTableViewComponent implements OnInit {
 
-    dataSource = new MatTableDataSource();
+    dataSource = new MatTableDataSource<Country>();
 
     keys: string[];
 
@@ -26,7 +26,6 @@ export class WorldPopulationTableViewComponent implements OnInit {
 
 
     constructor(
-        private worldPopulationService: WorldPopulationService,
         private worldPopulationInitService: WorldPopulationInitService        
         ) {
 
@@ -38,21 +37,16 @@ export class WorldPopulationTableViewComponent implements OnInit {
         this.keys.push("star");
 
         this.config = this.worldPopulationInitService.getConfig();
+       
+        this.dataSource = await this.worldPopulationInitService.getMatTableDataSource(this.sort, this.paginator);
 
-        const countries: Promise<Country[]> = this.worldPopulationService.getPopulation().toPromise<Country[]>();
-
-        this.dataSource.data = await countries;
-
-        this.dataSource.sort = this.sort;
-
-        this.dataSource.paginator = this.paginator;
 
     }
-    getValue(element: any, key: string): any {
+    getValue(element: Country, key: string): any {
         return element[key];
     }
    
-    applyFilter(event: Event) {
+    applyFilter(event: Event):void {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
@@ -78,7 +72,3 @@ export class WorldPopulationTableViewComponent implements OnInit {
 
 }
 
-export class HeaderRename {
-    property: string;
-    name: string;
-}
