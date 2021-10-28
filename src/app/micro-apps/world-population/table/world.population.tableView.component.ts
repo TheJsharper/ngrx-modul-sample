@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Countries, Country, keys } from '../models/model.contries';
 import { WorldPopulationService } from '../services/world.population.service';
+import { WorldPopulationUtils } from '../utils/world.population.utils';
 import { HeaderRename } from '../view-models/view-models';
 import { WorldPopulationInitService } from './../services/world.population.init.service';
 
@@ -52,22 +53,18 @@ export class WorldPopulationTableViewComponent implements OnInit {
     }
 
     isYear(value: any): boolean {
-
-        if (!isNaN(value)) {
-            const n: number = parseInt(value);
-            return n >= 1960;
-        } else {
-            return false;
-        }
+       
+        return WorldPopulationUtils.isYear(value);
     }
     getTotal(value: string): number {
-        return Countries.reduce((prev: number, cur:Country, ) => {
+        /*return Countries.reduce((prev: number, cur:Country, ) => {
 
             if (!isNaN(parseInt(cur[value])))
                 prev += parseInt(cur[value]);
             
             return prev;
-        }, 0)
+        }, 0)*/
+        return WorldPopulationUtils.getTotalPopulationByYear(value);
     }
 
 }
