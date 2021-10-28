@@ -52,18 +52,10 @@ export class WorldPopulationTableViewComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    isYear(value: any): boolean {
-       
+    isYear(value: any): boolean {       
         return WorldPopulationUtils.isYear(value);
     }
     getTotal(value: string): number {
-        /*return Countries.reduce((prev: number, cur:Country, ) => {
-
-            if (!isNaN(parseInt(cur[value])))
-                prev += parseInt(cur[value]);
-            
-            return prev;
-        }, 0)*/
         return WorldPopulationUtils.getTotalPopulationByYear(value);
     }
 
