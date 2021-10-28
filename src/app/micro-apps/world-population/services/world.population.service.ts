@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Country } from '../models/model.contries';
-import { WorldPopulationModule } from '../world.population.module';
 
 @Injectable(/*{providedIn:WorldPopulationModule}*/)
 export class WorldPopulationService {

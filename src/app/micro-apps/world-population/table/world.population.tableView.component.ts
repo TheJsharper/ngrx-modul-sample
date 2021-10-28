@@ -42,7 +42,7 @@ export class WorldPopulationTableViewComponent implements OnInit {
 
 
     }
-    getValue(element: Country, key: string): any {
+    getValue(element: Country, key: string): string {
         return element[key];
     }
    
@@ -61,7 +61,7 @@ export class WorldPopulationTableViewComponent implements OnInit {
         }
     }
     getTotal(value: string): number {
-        return Countries.reduce((prev: number, cur, ) => {
+        return Countries.reduce((prev: number, cur:Country, ) => {
 
             if (!isNaN(parseInt(cur[value])))
                 prev += parseInt(cur[value]);
