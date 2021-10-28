@@ -11,6 +11,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { WorldPopulationInitService } from './services/world.population.init.service';
+import { WorldPopulationService } from './services/world.population.service';
 import { WorldPopulationTableViewComponent } from './table/world.population.tableView.component';
 import { WorldPopulationRouting } from './world.population-routing.module';
 @NgModule({
@@ -22,6 +23,6 @@ import { WorldPopulationRouting } from './world.population-routing.module';
           MatPaginatorModule,
           FormsModule, CommonModule],
     exports: [RouterModule, WorldPopulationTableViewComponent],
-    providers:[ WorldPopulationInitService]
+    providers:[ WorldPopulationService, WorldPopulationInitService]
 })
 export class WorldPopulationModule { }

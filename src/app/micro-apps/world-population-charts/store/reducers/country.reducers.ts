@@ -1,12 +1,11 @@
 
-import { Countries } from './../../../world-population/models/model.contries';
-
 import { createReducer, on } from '@ngrx/store';
 import { TypedAction } from '@ngrx/store/src/models';
+import { cloneDeep } from 'lodash';
 import { AppStoreCountry, CountryPropertries } from '../../models/app.store.country';
 import { CountryActions } from '../actions/action-types';
 
-import { cloneDeep} from'lodash';
+
 
 
 export interface CountryState {

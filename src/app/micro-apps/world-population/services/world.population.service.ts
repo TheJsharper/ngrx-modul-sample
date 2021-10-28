@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { Country } from '../models/model.contries';
 import { WorldPopulationModule } from '../world.population.module';
 
-@Injectable({providedIn:WorldPopulationModule})
+@Injectable(/*{providedIn:WorldPopulationModule}*/)
 export class WorldPopulationService {
     private socketClient: SocketIOClient.Socket;
 
