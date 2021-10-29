@@ -32,7 +32,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.mediaQuery.pipe(
       takeUntil(this.listenerDestroyer),
       tap((mediaChange:MediaChange)=>{
-        if(mediaChange.mqAlias == "xs" || mediaChange.mqAlias == "md" || mediaChange.mqAlias == "sm") this.isExpanded = false;
+        if(mediaChange.mqAlias == "xs" || 
+        mediaChange.mqAlias == "md" ||
+         mediaChange.mqAlias == "sm") this.isExpanded = false;
         else this.isExpanded = true;
     })).subscribe();
   }

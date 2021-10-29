@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MediaChange } from '@angular/flex-layout';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,7 +15,7 @@ import { WorldPopulationInitService } from './../services/world.population.init.
     templateUrl: './world.population.tableView.component.html',
     styleUrls: ['./world.population.tabbleView.component.scss']
 })
-export class WorldPopulationTableViewComponent implements OnInit {
+export class WorldPopulationTableViewComponent implements OnInit, AfterViewInit {
 
     dataSource = new MatTableDataSource<Country>();
 
@@ -36,9 +36,13 @@ export class WorldPopulationTableViewComponent implements OnInit {
         ) {
             
     }
+    ngAfterViewInit(): void {
+        throw new Error('Method not implemented.');
+    }
     async ngOnInit(): Promise<void> {
 
-        this.mediaQuery = this.mediaObserver.getMediaQuery();       
+        this.mediaQuery = this.mediaObserver.getMediaQuery();
+        this.mediaQuery.subscribe((values)=> console.log("===", values))       
     
         this.keys = keys;
 

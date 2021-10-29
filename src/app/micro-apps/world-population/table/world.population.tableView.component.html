@@ -2,7 +2,7 @@
   The World component
 </h1>
 <!--<div *ngIf="(mediaQuery|async) as mq" >
-  <ng-container  *ngIf="mq.mqAlias == 'md'">-->
+  <ng-container  *ngIf="mq.mqAlias == 'md' || mq.mqAlias == 'lg' ||mq.mqAlias == 'xl'">-->
     <mat-form-field>
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
