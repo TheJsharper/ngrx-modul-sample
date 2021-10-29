@@ -2,8 +2,7 @@
 
 //--- start sidvnvar----
   .example-container {
-   height: 100vh;
-   // border: 1px solid rgba(0, 0, 0, 0.5);
+   height: calc(100vh - 60px);
   }
   .example-sidenav-content {
     display: flex;
@@ -66,10 +65,10 @@
   }
 
   .toolbar {
-    position: absolute;
+   /* position: absolute;
     top: 0;
     left: 0;
-    right: 0;
+    right: 0;*/
     height: 60px;
     display: flex;
     align-items: center;
