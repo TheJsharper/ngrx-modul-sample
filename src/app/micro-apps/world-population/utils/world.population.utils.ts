@@ -18,7 +18,6 @@ export class WorldPopulationUtils{
             
             return totalPopulaton;
         }, 0);
-        console.log(result);
         return result;
     }
     private static isNumber(value:number|string| any):value is number{

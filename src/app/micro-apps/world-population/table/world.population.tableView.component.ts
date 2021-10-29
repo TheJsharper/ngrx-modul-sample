@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MediaChange } from '@angular/flex-layout';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Countries, Country, keys } from '../models/model.contries';
-import { WorldPopulationService } from '../services/world.population.service';
+import { Observable } from 'rxjs';
+import { Country, keys } from '../models/model.contries';
 import { WorldPopulationUtils } from '../utils/world.population.utils';
 import { HeaderRename } from '../view-models/view-models';
+import { AppMediaQueryService } from './../../../services/app.media-query.service';
 import { WorldPopulationInitService } from './../services/world.population.init.service';
 
 @Component({
@@ -25,14 +27,19 @@ export class WorldPopulationTableViewComponent implements OnInit {
 
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+    mediaQuery:Observable<MediaChange>;
+
 
     constructor(
-        private worldPopulationInitService: WorldPopulationInitService        
+        private worldPopulationInitService: WorldPopulationInitService,  
+        private mediaObserver: AppMediaQueryService,         
         ) {
-
+            
     }
     async ngOnInit(): Promise<void> {
 
+        this.mediaQuery = this.mediaObserver.getMediaQuery();       
+    
         this.keys = keys;
 
         this.keys.push("star");

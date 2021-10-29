@@ -17,7 +17,8 @@ import { StoreModule } from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import { reducers, metaReducers } from './micro-apps/store/reducers';
 import { environment } from 'src/environments/environment';
-
+import { AppMediaQueryService } from './services/app.media-query.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   declarations: [
     AppComponent
@@ -38,8 +39,9 @@ import { environment } from 'src/environments/environment';
     MatExpansionModule,
     StoreModule.forRoot(reducers,{metaReducers}),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
+    FlexLayoutModule
   ],
-  providers: [],
+  providers: [AppMediaQueryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

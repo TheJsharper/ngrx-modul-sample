@@ -14,6 +14,7 @@ import { WorldPopulationInitService } from './services/world.population.init.ser
 import { WorldPopulationService } from './services/world.population.service';
 import { WorldPopulationTableViewComponent } from './table/world.population.tableView.component';
 import { WorldPopulationRouting } from './world.population-routing.module';
+
 @NgModule({
     declarations: [WorldPopulationTableViewComponent],
     imports: [WorldPopulationRouting,
@@ -21,7 +22,9 @@ import { WorldPopulationRouting } from './world.population-routing.module';
          RouterModule, MatTableModule, CdkTableModule, MatIconModule, MatFormFieldModule,
           MatInputModule, MatSortModule, 
           MatPaginatorModule,
-          FormsModule, CommonModule],
+          FormsModule,
+        CommonModule
+    ],
     exports: [RouterModule, WorldPopulationTableViewComponent],
     providers:[ WorldPopulationService, WorldPopulationInitService]
 })
